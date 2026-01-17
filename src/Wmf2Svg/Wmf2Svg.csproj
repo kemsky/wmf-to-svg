@@ -32,7 +32,7 @@
         <EmbedAllSources>true</EmbedAllSources>
 
         <IsPackable>true</IsPackable>
-        <PackageVersion>0.0.2</PackageVersion>
+        <PackageVersion>0.0.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
