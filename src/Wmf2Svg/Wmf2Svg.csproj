@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <Summary>WMF to SVG Converting Tool &amp; Library</Summary>
+        <OutputType>Library</OutputType>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Wmf2Svg</RootNamespace>
+        <AssemblyName>wmf2svg</AssemblyName>
+
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+
+        <Deterministic>true</Deterministic>
+        <DeterministicSourcePaths>true</DeterministicSourcePaths>
+
+        <PackageId>Wmf2Svg</PackageId>
+        <Author>Alexander Turtsevich</Author>
+        <Authors>Alexander Turtsevich, Hidekatsu Izuno, Shunsuke Mori</Authors>
+        <Description>WMF to SVG Converting Tool &amp; Library</Description>
+        <Copyright>Copyright © Alexander Turtsevich 2026</Copyright>
+        <PackageIcon>logo.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/kemsky/wmf-to-svg</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/kemsky/wmf-to-svg</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>wmf svg image convert</PackageTags>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <!--  https://stackoverflow.com/questions/41713693/include-pdb-files-into-my-nuget-nupkg-files  -->
+        <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <EmbedAllSources>true</EmbedAllSources>
+
+        <IsPackable>true</IsPackable>
+        <PackageVersion>0.0.1</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="SkiaSharp" Version="[2.88.7, )"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="logo.png" Pack="true" PackagePath="\" />
+        <None Include="../../README.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+        <!--  https://github.com/dotnet/roslyn/issues/55860  -->
+        <SourceRoot Include="$(SolutionDir)"/>
+    </ItemGroup>
+</Project>

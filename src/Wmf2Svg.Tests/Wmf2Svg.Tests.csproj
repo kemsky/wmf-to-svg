@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Wmf2Svg.Tests</RootNamespace>
+
+    <CoverletOutputFormat>opencover</CoverletOutputFormat>
+    <Threshold>20</Threshold>
+    <ThresholdType>line</ThresholdType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.msbuild" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="ReportGenerator" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wmf2Svg\Wmf2Svg.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Data\sample.wmf" />
+    <EmbeddedResource Include="Data\sample.svg" />
+    <EmbeddedResource Include="Data\pie_test.svg" />
+    <EmbeddedResource Include="Data\ellipse_test.wmf" />
+    <EmbeddedResource Include="Data\font_test.wmf" />
+    <EmbeddedResource Include="Data\pie_test.wmf" />
+  </ItemGroup>
+
+  <Target Name="GenerateHtmlCoverageReport" AfterTargets="GenerateCoverageResultAfterTest">
+    <ItemGroup>
+      <CoverageFiles Include="coverage.opencover.xml" />
+    </ItemGroup>
+    <ReportGenerator ReportFiles="@(CoverageFiles)" TargetDirectory="html-coverage-report" />
+  </Target>
+</Project>

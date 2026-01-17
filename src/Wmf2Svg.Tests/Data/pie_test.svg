@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="6.25in" height="6.25in" viewBox="0 0 200 200" preserveAspectRatio="none" stroke-linecap="round" fill-rule="evenodd">
+  <style type="text/css">
+.brush0 { fill: rgb(255,255,255); }
+.pen0 { stroke: rgb(0,0,0); stroke-width: 1; stroke-linejoin: round; }
+.brush1 { fill: none; }
+.pen1 { stroke: rgb(255,0,0); stroke-width: 1; stroke-linejoin: round; }
+</style>
+  <g>
+    <rect class="pen0 brush1" x="10" y="10" width="100" height="100" />
+    <path d="M 60,60 L 60,10 A 50,50 0 1 0 110,60 Z" class="pen1 brush1" />
+  </g>
+</svg>

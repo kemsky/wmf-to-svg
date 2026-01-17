@@ -1,0 +1,30 @@
+name: Publish nuget package
+
+on:
+  release:
+    types: 
+    - published
+    branches: 
+    - master
+  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore dependencies
+        run: dotnet restore Wmf2Svg.slnx
+      - name: Build
+        run: dotnet build -c Release -p:ContinuousIntegrationBuild=true --no-restore Wmf2Svg.slnx
+      - name: Test
+        run: dotnet test -c Release /p:CollectCoverage=true --no-build --no-restore --verbosity normal src/Wmf2Svg.Tests/Wmf2Svg.Tests.csproj
+      - name: Pack nugets
+        run: dotnet pack -c Release --no-build --no-restore --output . src/Wmf2Svg/Wmf2Svg.csproj
+      - name: Push nupkg to NuGet
+        run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
