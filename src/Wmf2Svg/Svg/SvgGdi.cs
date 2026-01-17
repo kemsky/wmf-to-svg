@@ -1473,6 +1473,709 @@ public sealed class SvgGdi : IGdi
             str = Regex.Replace(str, @"\r\n|[\t\r\n ]", "\u00A0");
         }
 
+        var font = _dc.Font;
+
+        if (ReplaceSymbolFont && font != null)
+        {
+            if (string.Equals("Symbol", font.FaceName, StringComparison.OrdinalIgnoreCase))
+            {
+                var state = 0; // 0: default, 1: serif, 2: sans-serif
+                var start = 0;
+                var ca = str.ToCharArray();
+
+                for (var i = 0; i < ca.Length; i++)
+                {
+                    var nstate = state;
+                    switch (ca[i])
+                    {
+                        case '"':
+                            ca[i] = '\u2200';
+                            nstate = 1;
+                            break;
+                        case '$':
+                            ca[i] = '\u2203';
+                            nstate = 1;
+                            break;
+                        case '\'':
+                            ca[i] = '\u220D';
+                            nstate = 1;
+                            break;
+                        case '*':
+                            ca[i] = '\u2217';
+                            nstate = 1;
+                            break;
+                        case '-':
+                            ca[i] = '\u2212';
+                            nstate = 1;
+                            break;
+                        case '@':
+                            ca[i] = '\u2245';
+                            nstate = 1;
+                            break;
+                        case 'A':
+                            ca[i] = '\u0391';
+                            nstate = 1;
+                            break;
+                        case 'B':
+                            ca[i] = '\u0392';
+                            nstate = 1;
+                            break;
+                        case 'C':
+                            ca[i] = '\u03A7';
+                            nstate = 1;
+                            break;
+                        case 'D':
+                            ca[i] = '\u0394';
+                            nstate = 1;
+                            break;
+                        case 'E':
+                            ca[i] = '\u0395';
+                            nstate = 1;
+                            break;
+                        case 'F':
+                            ca[i] = '\u03A6';
+                            nstate = 1;
+                            break;
+                        case 'G':
+                            ca[i] = '\u0393';
+                            nstate = 1;
+                            break;
+                        case 'H':
+                            ca[i] = '\u0397';
+                            nstate = 1;
+                            break;
+                        case 'I':
+                            ca[i] = '\u0399';
+                            nstate = 1;
+                            break;
+                        case 'J':
+                            ca[i] = '\u03D1';
+                            nstate = 1;
+                            break;
+                        case 'K':
+                            ca[i] = '\u039A';
+                            nstate = 1;
+                            break;
+                        case 'L':
+                            ca[i] = '\u039B';
+                            nstate = 1;
+                            break;
+                        case 'M':
+                            ca[i] = '\u039C';
+                            nstate = 1;
+                            break;
+                        case 'N':
+                            ca[i] = '\u039D';
+                            nstate = 1;
+                            break;
+                        case 'O':
+                            ca[i] = '\u039F';
+                            nstate = 1;
+                            break;
+                        case 'P':
+                            ca[i] = '\u03A0';
+                            nstate = 1;
+                            break;
+                        case 'Q':
+                            ca[i] = '\u0398';
+                            nstate = 1;
+                            break;
+                        case 'R':
+                            ca[i] = '\u03A1';
+                            nstate = 1;
+                            break;
+                        case 'S':
+                            ca[i] = '\u03A3';
+                            nstate = 1;
+                            break;
+                        case 'T':
+                            ca[i] = '\u03A4';
+                            nstate = 1;
+                            break;
+                        case 'U':
+                            ca[i] = '\u03A5';
+                            nstate = 1;
+                            break;
+                        case 'V':
+                            ca[i] = '\u03C3';
+                            nstate = 1;
+                            break;
+                        case 'W':
+                            ca[i] = '\u03A9';
+                            nstate = 1;
+                            break;
+                        case 'X':
+                            ca[i] = '\u039E';
+                            nstate = 1;
+                            break;
+                        case 'Y':
+                            ca[i] = '\u03A8';
+                            nstate = 1;
+                            break;
+                        case 'Z':
+                            ca[i] = '\u0396';
+                            nstate = 1;
+                            break;
+                        case '\\':
+                            ca[i] = '\u2234';
+                            nstate = 1;
+                            break;
+                        case '^':
+                            ca[i] = '\u22A5';
+                            nstate = 1;
+                            break;
+                        case '`':
+                            ca[i] = '\uF8E5';
+                            nstate = 1;
+                            break;
+                        case 'a':
+                            ca[i] = '\u03B1';
+                            nstate = 1;
+                            break;
+                        case 'b':
+                            ca[i] = '\u03B2';
+                            nstate = 1;
+                            break;
+                        case 'c':
+                            ca[i] = '\u03C7';
+                            nstate = 1;
+                            break;
+                        case 'd':
+                            ca[i] = '\u03B4';
+                            nstate = 1;
+                            break;
+                        case 'e':
+                            ca[i] = '\u03B5';
+                            nstate = 1;
+                            break;
+                        case 'f':
+                            ca[i] = '\u03C6';
+                            nstate = 1;
+                            break;
+                        case 'g':
+                            ca[i] = '\u03B3';
+                            nstate = 1;
+                            break;
+                        case 'h':
+                            ca[i] = '\u03B7';
+                            nstate = 1;
+                            break;
+                        case 'i':
+                            ca[i] = '\u03B9';
+                            nstate = 1;
+                            break;
+                        case 'j':
+                            ca[i] = '\u03D5';
+                            nstate = 1;
+                            break;
+                        case 'k':
+                            ca[i] = '\u03BA';
+                            nstate = 1;
+                            break;
+                        case 'l':
+                            ca[i] = '\u03BB';
+                            nstate = 1;
+                            break;
+                        case 'm':
+                            ca[i] = '\u03BC';
+                            nstate = 1;
+                            break;
+                        case 'n':
+                            ca[i] = '\u03BD';
+                            nstate = 1;
+                            break;
+                        case 'o':
+                            ca[i] = '\u03BF';
+                            nstate = 1;
+                            break;
+                        case 'p':
+                            ca[i] = '\u03C0';
+                            nstate = 1;
+                            break;
+                        case 'q':
+                            ca[i] = '\u03B8';
+                            nstate = 1;
+                            break;
+                        case 'r':
+                            ca[i] = '\u03C1';
+                            nstate = 1;
+                            break;
+                        case 's':
+                            ca[i] = '\u03C3';
+                            nstate = 1;
+                            break;
+                        case 't':
+                            ca[i] = '\u03C4';
+                            nstate = 1;
+                            break;
+                        case 'u':
+                            ca[i] = '\u03C5';
+                            nstate = 1;
+                            break;
+                        case 'v':
+                            ca[i] = '\u03D6';
+                            nstate = 1;
+                            break;
+                        case 'w':
+                            ca[i] = '\u03C9';
+                            nstate = 1;
+                            break;
+                        case 'x':
+                            ca[i] = '\u03BE';
+                            nstate = 1;
+                            break;
+                        case 'y':
+                            ca[i] = '\u03C8';
+                            nstate = 1;
+                            break;
+                        case 'z':
+                            ca[i] = '\u03B6';
+                            nstate = 1;
+                            break;
+                        case '~':
+                            ca[i] = '\u223C';
+                            nstate = 1;
+                            break;
+                        case '\u00A0':
+                            ca[i] = '\u20AC';
+                            nstate = 1;
+                            break;
+                        case '\u00A1':
+                            ca[i] = '\u03D2';
+                            nstate = 1;
+                            break;
+                        case '\u00A2':
+                            ca[i] = '\u2032';
+                            nstate = 1;
+                            break;
+                        case '\u00A3':
+                            ca[i] = '\u2264';
+                            nstate = 1;
+                            break;
+                        case '\u00A4':
+                            ca[i] = '\u2044';
+                            nstate = 1;
+                            break;
+                        case '\u00A5':
+                            ca[i] = '\u221E';
+                            nstate = 1;
+                            break;
+                        case '\u00A6':
+                            ca[i] = '\u0192';
+                            nstate = 1;
+                            break;
+                        case '\u00A7':
+                            ca[i] = '\u2663';
+                            nstate = 1;
+                            break;
+                        case '\u00A8':
+                            ca[i] = '\u2666';
+                            nstate = 1;
+                            break;
+                        case '\u00A9':
+                            ca[i] = '\u2665';
+                            nstate = 1;
+                            break;
+                        case '\u00AA':
+                            ca[i] = '\u2660';
+                            nstate = 1;
+                            break;
+                        case '\u00AB':
+                            ca[i] = '\u2194';
+                            nstate = 1;
+                            break;
+                        case '\u00AC':
+                            ca[i] = '\u2190';
+                            nstate = 1;
+                            break;
+                        case '\u00AD':
+                            ca[i] = '\u2191';
+                            nstate = 1;
+                            break;
+                        case '\u00AE':
+                            ca[i] = '\u2192';
+                            nstate = 1;
+                            break;
+                        case '\u00AF':
+                            ca[i] = '\u2193';
+                            nstate = 1;
+                            break;
+                        case '\u00B2':
+                            ca[i] = '\u2033';
+                            nstate = 1;
+                            break;
+                        case '\u00B3':
+                            ca[i] = '\u2265';
+                            nstate = 1;
+                            break;
+                        case '\u00B4':
+                            ca[i] = '\u00D7';
+                            nstate = 1;
+                            break;
+                        case '\u00B5':
+                            ca[i] = '\u221D';
+                            nstate = 1;
+                            break;
+                        case '\u00B6':
+                            ca[i] = '\u2202';
+                            nstate = 1;
+                            break;
+                        case '\u00B7':
+                            ca[i] = '\u2022';
+                            nstate = 1;
+                            break;
+                        case '\u00B8':
+                            ca[i] = '\u00F7';
+                            nstate = 1;
+                            break;
+                        case '\u00B9':
+                            ca[i] = '\u2260';
+                            nstate = 1;
+                            break;
+                        case '\u00BA':
+                            ca[i] = '\u2261';
+                            nstate = 1;
+                            break;
+                        case '\u00BB':
+                            ca[i] = '\u2248';
+                            nstate = 1;
+                            break;
+                        case '\u00BC':
+                            ca[i] = '\u2026';
+                            nstate = 1;
+                            break;
+                        case '\u00BD':
+                            ca[i] = '\u23D0';
+                            nstate = 1;
+                            break;
+                        case '\u00BE':
+                            ca[i] = '\u23AF';
+                            nstate = 1;
+                            break;
+                        case '\u00BF':
+                            ca[i] = '\u21B5';
+                            nstate = 1;
+                            break;
+                        case '\u00C0':
+                            ca[i] = '\u2135';
+                            nstate = 1;
+                            break;
+                        case '\u00C1':
+                            ca[i] = '\u2111';
+                            nstate = 1;
+                            break;
+                        case '\u00C2':
+                            ca[i] = '\u211C';
+                            nstate = 1;
+                            break;
+                        case '\u00C3':
+                            ca[i] = '\u2118';
+                            nstate = 1;
+                            break;
+                        case '\u00C4':
+                            ca[i] = '\u2297';
+                            nstate = 1;
+                            break;
+                        case '\u00C5':
+                            ca[i] = '\u2295';
+                            nstate = 1;
+                            break;
+                        case '\u00C6':
+                            ca[i] = '\u2205';
+                            nstate = 1;
+                            break;
+                        case '\u00C7':
+                            ca[i] = '\u2229';
+                            nstate = 1;
+                            break;
+                        case '\u00C8':
+                            ca[i] = '\u222A';
+                            nstate = 1;
+                            break;
+                        case '\u00C9':
+                            ca[i] = '\u2283';
+                            nstate = 1;
+                            break;
+                        case '\u00CA':
+                            ca[i] = '\u2287';
+                            nstate = 1;
+                            break;
+                        case '\u00CB':
+                            ca[i] = '\u2284';
+                            nstate = 1;
+                            break;
+                        case '\u00CC':
+                            ca[i] = '\u2282';
+                            nstate = 1;
+                            break;
+                        case '\u00CD':
+                            ca[i] = '\u2286';
+                            nstate = 1;
+                            break;
+                        case '\u00CE':
+                            ca[i] = '\u2208';
+                            nstate = 1;
+                            break;
+                        case '\u00CF':
+                            ca[i] = '\u2209';
+                            nstate = 1;
+                            break;
+                        case '\u00D0':
+                            ca[i] = '\u2220';
+                            nstate = 1;
+                            break;
+                        case '\u00D1':
+                            ca[i] = '\u2207';
+                            nstate = 1;
+                            break;
+                        case '\u00D2':
+                            ca[i] = '\u00AE';
+                            nstate = 1;
+                            break;
+                        case '\u00D3':
+                            ca[i] = '\u00A9';
+                            nstate = 1;
+                            break;
+                        case '\u00D4':
+                            ca[i] = '\u2122';
+                            nstate = 1;
+                            break;
+                        case '\u00D5':
+                            ca[i] = '\u220F';
+                            nstate = 1;
+                            break;
+                        case '\u00D6':
+                            ca[i] = '\u221A';
+                            nstate = 1;
+                            break;
+                        case '\u00D7':
+                            ca[i] = '\u22C5';
+                            nstate = 1;
+                            break;
+                        case '\u00D8':
+                            ca[i] = '\u00AC';
+                            nstate = 1;
+                            break;
+                        case '\u00D9':
+                            ca[i] = '\u2227';
+                            nstate = 1;
+                            break;
+                        case '\u00DA':
+                            ca[i] = '\u2228';
+                            nstate = 1;
+                            break;
+                        case '\u00DB':
+                            ca[i] = '\u21D4';
+                            nstate = 1;
+                            break;
+                        case '\u00DC':
+                            ca[i] = '\u21D0';
+                            nstate = 1;
+                            break;
+                        case '\u00DD':
+                            ca[i] = '\u21D1';
+                            nstate = 1;
+                            break;
+                        case '\u00DE':
+                            ca[i] = '\u21D2';
+                            nstate = 1;
+                            break;
+                        case '\u00DF':
+                            ca[i] = '\u21D3';
+                            nstate = 1;
+                            break;
+                        case '\u00E0':
+                            ca[i] = '\u25CA';
+                            nstate = 1;
+                            break;
+                        case '\u00E1':
+                            ca[i] = '\u3008';
+                            nstate = 1;
+                            break;
+                        case '\u00E2':
+                            ca[i] = '\u00AE';
+                            nstate = 2;
+                            break;
+                        case '\u00E3':
+                            ca[i] = '\u00A9';
+                            nstate = 2;
+                            break;
+                        case '\u00E4':
+                            ca[i] = '\u2122';
+                            nstate = 2;
+                            break;
+                        case '\u00E5':
+                            ca[i] = '\u2211';
+                            nstate = 1;
+                            break;
+                        case '\u00E6':
+                            ca[i] = '\u239B';
+                            nstate = 1;
+                            break;
+                        case '\u00E7':
+                            ca[i] = '\u239C';
+                            nstate = 1;
+                            break;
+                        case '\u00E8':
+                            ca[i] = '\u239D';
+                            nstate = 1;
+                            break;
+                        case '\u00E9':
+                            ca[i] = '\u23A1';
+                            nstate = 1;
+                            break;
+                        case '\u00EA':
+                            ca[i] = '\u23A2';
+                            nstate = 1;
+                            break;
+                        case '\u00EB':
+                            ca[i] = '\u23A3';
+                            nstate = 1;
+                            break;
+                        case '\u00EC':
+                            ca[i] = '\u23A7';
+                            nstate = 1;
+                            break;
+                        case '\u00ED':
+                            ca[i] = '\u23A8';
+                            nstate = 1;
+                            break;
+                        case '\u00EE':
+                            ca[i] = '\u23A9';
+                            nstate = 1;
+                            break;
+                        case '\u00EF':
+                            ca[i] = '\u23AA';
+                            nstate = 1;
+                            break;
+                        case '\u00F0':
+                            ca[i] = '\uF8FF';
+                            nstate = 1;
+                            break;
+                        case '\u00F1':
+                            ca[i] = '\u3009';
+                            nstate = 1;
+                            break;
+                        case '\u00F2':
+                            ca[i] = '\u222B';
+                            nstate = 1;
+                            break;
+                        case '\u00F3':
+                            ca[i] = '\u2320';
+                            nstate = 1;
+                            break;
+                        case '\u00F4':
+                            ca[i] = '\u23AE';
+                            nstate = 1;
+                            break;
+                        case '\u00F5':
+                            ca[i] = '\u2321';
+                            nstate = 1;
+                            break;
+                        case '\u00F6':
+                            ca[i] = '\u239E';
+                            nstate = 1;
+                            break;
+                        case '\u00F7':
+                            ca[i] = '\u239F';
+                            nstate = 1;
+                            break;
+                        case '\u00F8':
+                            ca[i] = '\u23A0';
+                            nstate = 1;
+                            break;
+                        case '\u00F9':
+                            ca[i] = '\u23A4';
+                            nstate = 1;
+                            break;
+                        case '\u00FA':
+                            ca[i] = '\u23A5';
+                            nstate = 1;
+                            break;
+                        case '\u00FB':
+                            ca[i] = '\u23A6';
+                            nstate = 1;
+                            break;
+                        case '\u00FC':
+                            ca[i] = '\u23AB';
+                            nstate = 1;
+                            break;
+                        case '\u00FD':
+                            ca[i] = '\u23AC';
+                            nstate = 1;
+                            break;
+                        case '\u00FE':
+                            ca[i] = '\u23AD';
+                            nstate = 1;
+                            break;
+                        case '\u00FF':
+                            ca[i] = '\u2192';
+                            nstate = 1;
+                            break;
+                        default:
+                            nstate = 0;
+                            break;
+                    }
+
+                    if (nstate != state)
+                    {
+                        if (start < i)
+                        {
+                            var text = _doc.CreateTextNode(new string(ca, start, i - start));
+                            
+                            if (state == 0)
+                            {
+                                elem.AppendChild(text);
+                            }
+                            else if (state == 1)
+                            {
+                                var span = _doc.CreateElement("tspan");
+                                span.SetAttribute("font-family", "serif");
+                                span.AppendChild(text);
+                                elem.AppendChild(span);
+                            }
+                            else if (state == 2)
+                            {
+                                var span = _doc.CreateElement("tspan");
+                                span.SetAttribute("font-family", "sans-serif");
+                                span.AppendChild(text);
+                                elem.AppendChild(span);
+                            }
+
+                            start = i;
+                        }
+
+                        state = nstate;
+                    }
+                }
+
+                if (start < ca.Length)
+                {
+                    var text = _doc.CreateTextNode(new string(ca, start, ca.Length - start));
+                    if (state == 0)
+                    {
+                        elem.AppendChild(text);
+                    }
+                    else if (state == 1)
+                    {
+                        var span = _doc.CreateElement("tspan");
+                        span.SetAttribute("font-family", "serif");
+                        span.AppendChild(text);
+                        elem.AppendChild(span);
+                    }
+                    else if (state == 2)
+                    {
+                        var span = _doc.CreateElement("tspan");
+                        span.SetAttribute("font-family", "sans-serif");
+                        span.AppendChild(text);
+                        elem.AppendChild(span);
+                    }
+                }
+
+                return;
+            }
+        }
+
         elem.AppendChild(_doc.CreateTextNode(str));
     }
 

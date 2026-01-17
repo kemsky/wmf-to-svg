@@ -10,12 +10,13 @@ public sealed class WmfParser
     /// </summary>
     /// <param name="data">the source byte array</param>
     /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// <param name="replaceSymbolFont">replace SYMBOL Font to serif or sans-serif Unicode SYMBOL</param>
     /// <returns></returns>
-    public SvgGdi Parse(byte[] data, bool compatible = false)
+    public SvgGdi Parse(byte[] data, bool compatible = false, bool replaceSymbolFont = false)
     {
         using var stream = new MemoryStream(data, writable: false);
 
-        return Parse(stream, compatible);
+        return Parse(stream, compatible, replaceSymbolFont: replaceSymbolFont);
     }
 
     /// <summary>
@@ -25,12 +26,13 @@ public sealed class WmfParser
     /// <param name="index">the index in byte array at which the stream begins</param>
     /// <param name="count">the length of the stream in bytes</param>
     /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// <param name="replaceSymbolFont">replace SYMBOL Font to serif or sans-serif Unicode SYMBOL</param>
     /// <returns></returns>
-    public SvgGdi Parse(byte[] data, int index, int count, bool compatible = false)
+    public SvgGdi Parse(byte[] data, int index, int count, bool compatible = false, bool replaceSymbolFont = false)
     {
         var stream = new MemoryStream(data, index: index, count: count, writable: false);
 
-        return Parse(stream, compatible);
+        return Parse(stream, compatible, replaceSymbolFont: replaceSymbolFont);
     }
 
     /// <summary>
@@ -38,12 +40,14 @@ public sealed class WmfParser
     /// </summary>
     /// <param name="stream">the source stream</param>
     /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// /// <param name="replaceSymbolFont">replace SYMBOL Font to serif or sans-serif Unicode SYMBOL</param>
     /// <returns></returns>
     /// <exception cref="WmfParseException"></exception>
-    public SvgGdi Parse(Stream stream, bool compatible = true)
+    public SvgGdi Parse(Stream stream, bool compatible = false, bool replaceSymbolFont = false)
     {
         var gdi = new SvgGdi(compatible: compatible);
-        gdi.ReplaceSymbolFont = true;
+
+        gdi.ReplaceSymbolFont = replaceSymbolFont;
 
         using var input = new DataInput(new BufferedStream(stream), isLittleEndian: true);
 
