@@ -2,6 +2,8 @@ bin
 obj
 .idea
 *.user
+*.nupkg
+*.snupkg
 
 coverage.opencover.xml
 html-coverage-report

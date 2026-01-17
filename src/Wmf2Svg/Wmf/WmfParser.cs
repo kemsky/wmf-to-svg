@@ -5,12 +5,48 @@ namespace Wmf2Svg.Wmf;
 
 public sealed class WmfParser
 {
-    public SvgGdi Parse(Stream stream, bool compatible = true, bool replaceSymbolFont = true)
+    /// <summary>
+    /// Creates SVG object from WMF bytes
+    /// </summary>
+    /// <param name="data">the source byte array</param>
+    /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// <returns></returns>
+    public SvgGdi Parse(byte[] data, bool compatible = false)
+    {
+        using var stream = new MemoryStream(data, writable: false);
+
+        return Parse(stream, compatible);
+    }
+
+    /// <summary>
+    /// Creates SVG object from WMF bytes
+    /// </summary>
+    /// <param name="data">the source byte array</param>
+    /// <param name="index">the index in byte array at which the stream begins</param>
+    /// <param name="count">the length of the stream in bytes</param>
+    /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// <returns></returns>
+    public SvgGdi Parse(byte[] data, int index, int count, bool compatible = false)
+    {
+        var stream = new MemoryStream(data, index: index, count: count, writable: false);
+
+        return Parse(stream, compatible);
+    }
+
+    /// <summary>
+    /// Creates SVG object from WMF stream
+    /// </summary>
+    /// <param name="stream">the source stream</param>
+    /// <param name="compatible">output IE9 compatible style. but it's dirty and approximative</param>
+    /// <returns></returns>
+    /// <exception cref="WmfParseException"></exception>
+    public SvgGdi Parse(Stream stream, bool compatible = true)
     {
         var gdi = new SvgGdi(compatible: compatible);
-        gdi.ReplaceSymbolFont = replaceSymbolFont;
+        gdi.ReplaceSymbolFont = true;
 
         using var input = new DataInput(new BufferedStream(stream), isLittleEndian: true);
+
         var isEmpty = true;
 
         try
@@ -51,7 +87,7 @@ public sealed class WmfParser
 
             if (mtType != 1 || mtHeaderSize != 9)
             {
-                throw new WmfParseException("invalid file format.");
+                throw new WmfParseException("Invalid format");
             }
 
             gdi.Header();
@@ -872,7 +908,7 @@ public sealed class WmfParser
                     }
 
                     default:
-                        throw new InvalidOperationException($"unsupported id find: {id} (size={size})");
+                        throw new WmfParseException($"Unsupported id: {id} (size={size})");
                 }
 
                 var rest = size * 2 - input.Count;
@@ -884,12 +920,14 @@ public sealed class WmfParser
 
             gdi.Footer();
         }
-        catch (EndOfStreamException)
+        catch (EndOfStreamException e)
         {
             if (isEmpty)
             {
-                throw new WmfParseException("input file size is zero.");
+                throw new WmfParseException("Failed to parse WMF, the source is empty", e);
             }
+
+            throw new WmfParseException("Failed to parse WMF", e);
         }
 
         return gdi;
